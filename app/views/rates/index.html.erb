@@ -1,0 +1,27 @@
+<div id="chart"></div>
+<script>
+  var dates = <%= @data.map { |d| d[:date] }.to_json.html_safe %>;
+  var usdRates = <%= @data.map { |d| d[:usd] }.to_json.html_safe %>;
+  var eurRates = <%= @data.map { |d| d[:eur] }.to_json.html_safe %>;
+
+  var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+        x: 'x',
+        columns: [
+            ['x'].concat(dates),
+            ['USD'].concat(usdRates),
+            ['EUR'].concat(eurRates)
+        ],
+        xFormat: '%Y-%m-%d'
+    },
+    axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m-%d'
+            }
+        }
+    }
+  });
+</script>
